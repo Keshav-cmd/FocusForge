@@ -1,0 +1,109 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FocusForge</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .app {
+      background: #020617;
+      padding: 2rem;
+      border-radius: 12px;
+      width: 320px;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(0,0,0,0.6);
+    }
+    button {
+      background: #22c55e;
+      border: none;
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin: 0.3rem;
+    }
+    button.secondary {
+      background: #1e293b;
+      color: #e5e7eb;
+    }
+    .timer {
+      font-size: 3rem;
+      margin: 1rem 0;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h2>FocusForge</h2>
+
+    <div id="startScreen">
+      <p>Channel the energy.</p>
+      <button onclick="startSession()">Start 10-min Focus</button>
+    </div>
+
+    <div id="activityScreen" class="hidden">
+      <p>Choose your outlet</p>
+      <button class="secondary" onclick="beginTimer('Write')">✍️ Write</button>
+      <button class="secondary" onclick="beginTimer('Study')">📚 Study</button>
+      <button class="secondary" onclick="beginTimer('Exercise')">💪 Exercise</button>
+      <button class="secondary" onclick="beginTimer('Create')">🎨 Create</button>
+    </div>
+
+    <div id="timerScreen" class="hidden">
+      <p id="activityLabel"></p>
+      <div class="timer" id="timer">10:00</div>
+      <button onclick="resetApp()">Done</button>
+    </div>
+  </div>
+
+  <script>
+    let timeLeft = 600;
+    let interval;
+
+    function startSession() {
+      document.getElementById("startScreen").classList.add("hidden");
+      document.getElementById("activityScreen").classList.remove("hidden");
+    }
+
+    function beginTimer(activity) {
+      document.getElementById("activityScreen").classList.add("hidden");
+      document.getElementById("timerScreen").classList.remove("hidden");
+      document.getElementById("activityLabel").innerText = activity;
+      interval = setInterval(tick, 1000);
+    }
+
+    function tick() {
+      if (timeLeft <= 0) {
+        clearInterval(interval);
+        alert("Session complete. Energy forged.");
+        resetApp();
+        return;
+      }
+      timeLeft--;
+      const min = String(Math.floor(timeLeft / 60)).padStart(2, "0");
+      const sec = String(timeLeft % 60).padStart(2, "0");
+      document.getElementById("timer").innerText = `${min}:${sec}`;
+    }
+
+    function resetApp() {
+      clearInterval(interval);
+      timeLeft = 600;
+      document.getElementById("timer").innerText = "10:00";
+      document.getElementById("timerScreen").classList.add("hidden");
+      document.getElementById("startScreen").classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>
