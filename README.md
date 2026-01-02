@@ -40,7 +40,7 @@ JavaScript
 Clone the repository:
 Copy code
 Bash
-git clone https://github.com/your-username/focusforge.git
+git clone https://github.com/keshav-cmd/focusforge.git
 
 Navigate to the project folder:
 Copy code
